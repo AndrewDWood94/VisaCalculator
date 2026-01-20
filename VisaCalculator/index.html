@@ -283,8 +283,18 @@
                 totalCost += adultDependantsAppFeeTotal;
                 resultsHTML += `<tr><td>Application Fee - Adult Dependants</td><td>£${adultDependantsAppFeeTotal.toFixed(2)}</td><td>${numAdultDependants} adult(s) @ £${singleAdultDependantAppFee.toFixed(2)} each</td></tr>`;
             }
+            
+            let childDependantsAppFeeTotal = 0;
             if (numChildDependants > 0) {
-                 resultsHTML += `<tr><td>Application Fee - Child Dependants</td><td>£0.00</td><td>Not specified for children</td></tr>`;
+                let singleChildDependantAppFee = 0;
+                if (onSalaryList) { 
+                    singleChildDependantAppFee = APP_FEE_SALARY_LIST;
+                } else {
+                    singleChildDependantAppFee = (applyingFrom === 'outside_uk') ? APP_FEE_OUTSIDE_UK : APP_FEE_INSIDE_UK;
+                }
+                childDependantsAppFeeTotal = numChildDependants * singleChildDependantAppFee;
+                totalCost += childDependantsAppFeeTotal;
+                resultsHTML += `<tr><td>Application Fee - Child Dependants</td><td>£${childDependantsAppFeeTotal.toFixed(2)}</td><td>${numChildDependants} child(ren) @ £${singleChildDependantAppFee.toFixed(2)} each</td></tr>`;
             }
 
             // --- 4. Immigration Health Surcharge (IHS) ---
@@ -335,4 +345,3 @@
     </script>
 </body>
 </html>
-
